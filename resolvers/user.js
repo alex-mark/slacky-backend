@@ -1,9 +1,6 @@
-import bcrypt from 'bcrypt';
 import R from 'ramda';
 
 import { tryLogin } from '../auth';
-
-const saltRounds = 10;
 
 const formatErrors = (err, models) => {
   if (err instanceof models.sequelize.ValidationError) {
@@ -20,21 +17,9 @@ export default {
   Mutation: {
     login: (parent, { email, password }, { models, SECRET, SECRET2 }) =>
       tryLogin(email, password, models, SECRET, SECRET2),
-    register: async (parent, { password, ...otherArgs }, { models }) => {
+    register: async (parent, args, { models }) => {
       try {
-        if (password.length < 5 || password.length > 100) {
-          return {
-            ok: false,
-            errors: [
-              {
-                path: 'password',
-                message: 'The password needs to be between 5 and 100 characters long',
-              },
-            ],
-          };
-        }
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        const user = await models.User.create({ ...otherArgs, password: hashedPassword });
+        const user = await models.User.create(args);
         return {
           ok: true,
           user,
