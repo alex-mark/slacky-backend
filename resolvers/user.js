@@ -1,13 +1,5 @@
-import R from 'ramda';
-
 import { tryLogin } from '../auth';
-
-const formatErrors = (err, models) => {
-  if (err instanceof models.sequelize.ValidationError) {
-    return err.errors.map(e => R.pick(['path', 'message'], e));
-  }
-  return [{ path: 'name', message: 'Something went wrong' }];
-};
+import formatErrors from '../formatErrors';
 
 export default {
   Query: {
