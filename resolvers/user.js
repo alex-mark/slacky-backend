@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import R from 'ramda';
 
+import { tryLogin } from '../auth';
+
 const saltRounds = 10;
 
 const formatErrors = (err, models) => {
@@ -16,6 +18,8 @@ export default {
     allUsers: (parent, args, { models }) => models.User.findAll(),
   },
   Mutation: {
+    login: (parent, { email, password }, { models, SECRET, SECRET2 }) =>
+      tryLogin(email, password, models, SECRET, SECRET2),
     register: async (parent, { password, ...otherArgs }, { models }) => {
       try {
         if (password.length < 5 || password.length > 100) {

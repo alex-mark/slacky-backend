@@ -8,6 +8,9 @@ import cors from 'cors';
 
 import models from './models';
 
+const SECRET = '1inriuewdnvcuilasn78324gyvdjhbfhjaeks';
+const SECRET2 = 'lkhsuinerifdsuklyoqwijfklsfnqfknwrlkwkldg';
+
 const types = fileLoader(path.join(__dirname, './schema'));
 const typeDefs = mergeTypes(types);
 
@@ -35,6 +38,8 @@ app.use(
       user: {
         id: 1,
       },
+      SECRET,
+      SECRET2,
     },
   }),
 );
