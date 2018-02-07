@@ -41,7 +41,6 @@ const addUser = async (req, res, next) => {
         res.set('Access-Control-Expose-Headers', 'x-token, x-refresh-token');
         res.set('x-token', newTokens.token);
         res.set('x-refresh-token', newTokens.refreshToken);
-        console.log(res);
       }
       req.user = newTokens.user;
     }
